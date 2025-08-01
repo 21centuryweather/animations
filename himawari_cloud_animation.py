@@ -8,6 +8,8 @@ https://21centuryweather.github.io/21st-Century-Weather-Software-Wiki/datasets/h
 
 Change ## USER INPUT ## section as requried (dates, domain, user etc)
 
+mp4 quality is set to 30, with lower values being better quality but higher file size
+
 Please cite/acknowledge the following people if this data has been used for publications/presentations: 
 Samuel Green - ORCID 0000-0003-1129-4676; Mat Lipson - ORCID 0000-0001-5322-1796; Kimberley Reid - ORCID 0000-0001-5972-6015.
 
@@ -40,10 +42,11 @@ user = 'mjl561'
 # subset domain of interest
 xmin, xmax, ymin, ymax = 140.95, 154.30, -39.35, -24.54  # ECL subdomain
 # xmin, xmax, ymin, ymax = 110, 155, -45, -9               # Australian domain
+xmin, xmax, ymin, ymax = 145, 165, -35, -15     # SE Queensland domain
 
 # dates of interest
-sdate = '2025-03-27 00:00'
-edate = '2025-03-28 00:00'
+sdate = '2025-03-06 00:00'
+edate = '2025-03-08 00:00'
 
 # output directory
 output_dir = f'/scratch/{project}/{user}/himawari_cloud_animation/'
@@ -76,12 +79,13 @@ def main(xmin, xmax, ymin, ymax, sdate, edate):
 
         # Create animation frame for each time step
         da = ds.sel(time=time).ct
-        create_animation_frame(da, cmap, norm, category_dict)
+        # if no data in da, then skip
+        create_animation_frame(da, cmap, norm, category_dict) if da.notnull().all() else print(f"skipping.")
 
     # now create animation from the created frames
     fnamein = f'{output_dir}/himawari_cloud_type_*.png'
     fnameout = f'{output_dir}/himawari_cloud_type_animation.mp4'
-    make_mp4(fnamein,fnameout,fps=24,quality=32)
+    make_mp4(fnamein,fnameout,fps=24,quality=30)
 
     return ds_z
 
