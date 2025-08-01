@@ -6,11 +6,14 @@ __email__ = "m.lipson@unsw.edu.au"
 Himawari-8 Cloud Type Animation, based on Sam Green's example:
 https://21centuryweather.github.io/21st-Century-Weather-Software-Wiki/datasets/himawari-ahi.html
 
+Change ## USER INPUT ## section as requried (dates, domain, user etc)
+
 Please cite/acknowledge the following people if this data has been used for publications/presentations: 
 Samuel Green - ORCID 0000-0003-1129-4676; Mat Lipson - ORCID 0000-0001-5322-1796; Kimberley Reid - ORCID 0000-0001-5972-6015.
 
-Environment:
+Run with:
     module use /g/data/xp65/public/modules; module load conda/analysis3
+    python himawari_cloud_animation.py
 """
 
 import xarray as xr
@@ -26,9 +29,6 @@ import matplotlib as mpl
 import matplotlib.ticker as mticker
 
 from dask.distributed import Client
-
-client = Client()
-client
 
 ####################################################################
 ## USER INPUT ##
@@ -288,6 +288,9 @@ def make_mp4(fnamein,fnameout,fps=9,quality=26):
     return f'completed, see: {fnameout}'
 
 if __name__ == "__main__":
+
+    client = Client()
+    client
 
     # check if output directory exists, if not create it
     if not os.path.exists(output_dir):
