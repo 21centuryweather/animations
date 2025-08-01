@@ -50,6 +50,7 @@ edate = '2025-03-08 00:00'
 
 # output directory
 output_dir = f'/scratch/{project}/{user}/himawari_cloud_animation/'
+output_quality = 30  # mp4 quality, lower is better, range 0 to 51
 
 ####################################################################
 
@@ -85,7 +86,7 @@ def main(xmin, xmax, ymin, ymax, sdate, edate):
     # now create animation from the created frames
     fnamein = f'{output_dir}/himawari_cloud_type_*.png'
     fnameout = f'{output_dir}/himawari_cloud_type_animation.mp4'
-    make_mp4(fnamein,fnameout,fps=24,quality=30)
+    make_mp4(fnamein,fnameout,fps=24,quality=output_quality)
 
     return ds_z
 
