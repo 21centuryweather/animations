@@ -3,6 +3,12 @@ A resource for sharing animation, plotting code etc.
 
 Describe your script here
 
+### workshop_demo/
+
+Authors: Andrew Brown, Paul Gregory
+
+Example animation notebooks for rAM3, Himawari and ERA5, as part of the 2025 annual workshop ECR day. See [README](workshop_demo/README.md).
+
 ### himawari_cloud_animation.py
 
 Authors: Mathew Lipson, Samuel Green
