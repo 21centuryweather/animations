@@ -5,6 +5,8 @@ to visualize the terrain.
 
 author: Mat Lipson m.lipson@unsw.edu.au
 institution: 21st Century Weather, UNSW Sydney
+
+Gadi environment: module use /g/data/xp65/public/modules; module load conda/analysis3-25.08
 """
 
 import os
@@ -20,7 +22,7 @@ user = os.getenv('USER')
 
 plotpath = f'/scratch/gb02/{user}/3d_orography'
 ancildir = '/g/data/gb02/public/AM3/ancils/u-dj813_om3-025deg'
-reses = ['n96e', 'n512e', 'n2560e']
+reses = ['n48e', 'n96e', 'n512e', 'n2560e']
 
 ######## Domains ########
 
@@ -28,8 +30,8 @@ reses = ['n96e', 'n512e', 'n2560e']
 domains = {
     # 'n_australia': (130, 153, -25, 5), # PNG and north Australia
     # 'e_australia': (135, 155, -45, -10), # North coast + Great Dividing Range + Tasmania
-    'se_australia': (142, 155, -45, -28), # Great Dividing Range + Tasmania
-    'small_europe': (-10, 10, 38, 60), # centred on France
+    # 'se_australia': (142, 155, -45, -28), # Great Dividing Range + Tasmania
+    'small_europe': (-10, 15, 33, 60), # centred on France
     # 'large_europe': (-40, 40, 20, 80),
 }
 
@@ -56,8 +58,12 @@ VMAX = 2500      # elevation [m] at which the colour scale reaches full brown (s
 
 def load(res, domain):
     xmin, xmax, ymin, ymax = domain
-    orogpath = f'{ancildir}/{res}/mom025_20250315/orography/gmted_ramp2/qrparm.orog_mean'
-    lsmpath = f'{ancildir}/{res}/mom025_20250315/land_sea_mask/etop01/qrparm.landfrac'
+    if res == 'n48e':
+        orogpath = f'/g/data/access/TIDS/UM/ancil/atmos/{res}/orography/globe30/v2/qrparm.orog'
+        lsmpath = f'/g/data/access/TIDS/UM/ancil/atmos/{res}/land_sea_mask/igbp/v2/qrparm.landfrac'
+    else:
+        orogpath = f'{ancildir}/{res}/mom025_20250315/orography/gmted_ramp2/qrparm.orog_mean'
+        lsmpath = f'{ancildir}/{res}/mom025_20250315/land_sea_mask/etop01/qrparm.landfrac'
     orog = xr.DataArray.from_iris(iris.load_cube(orogpath, constraint='surface_altitude'))
     lsm = xr.DataArray.from_iris(iris.load_cube(lsmpath))
     orog = orog.where(lsm.data > 0.5)

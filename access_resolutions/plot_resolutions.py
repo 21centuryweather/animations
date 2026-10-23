@@ -4,6 +4,8 @@ for the new higher resolution ACCESS-AM3 model.
 
 author: Mat Lipson m.lipson@unsw.edu.au
 institution: 21st Century Weather, UNSW Sydney
+
+Gadi environment: module use /g/data/xp65/public/modules; module load conda/analysis3-25.08
 """
 
 
